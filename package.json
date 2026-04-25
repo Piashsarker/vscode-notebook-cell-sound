@@ -1,0 +1,118 @@
+{
+  "name": "cell-completion-sound",
+  "displayName": "Cell Completion Sound",
+  "description": "Plays a customizable sound when a Jupyter notebook cell finishes execution - get audio feedback for long-running cells",
+  "version": "1.0.0",
+  "publisher": "piashsarker",
+  "author": {
+    "name": "Piash Sarker"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/piashsarker/cell-completion-sound"
+  },
+  "bugs": {
+    "url": "https://github.com/piashsarker/cell-completion-sound/issues"
+  },
+  "homepage": "https://github.com/piashsarker/cell-completion-sound#readme",
+  "keywords": [
+    "jupyter",
+    "notebook",
+    "sound",
+    "audio",
+    "cell",
+    "python",
+    "notification"
+  ],
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Notebooks",
+    "Other"
+  ],
+  "activationEvents": [
+    "onNotebook:jupyter-notebook",
+    "onNotebook:interactive"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Cell Completion Sound",
+      "properties": {
+        "cellCompletionSound.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable the completion sound"
+        },
+        "cellCompletionSound.soundFilePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a custom sound file (WAV, MP3, OGG). Leave empty to use the default sound."
+        },
+        "cellCompletionSound.volume": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Volume level (0.0 to 1.0)"
+        },
+        "cellCompletionSound.playOnSuccess": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play sound when cell execution succeeds"
+        },
+        "cellCompletionSound.playOnError": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play sound when cell execution fails"
+        },
+        "cellCompletionSound.errorSoundFilePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a custom sound file for errors. Leave empty to use the default error sound."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "cellCompletionSound.toggle",
+        "title": "Cell Sound: Toggle Sound On/Off"
+      },
+      {
+        "command": "cellCompletionSound.selectSoundFile",
+        "title": "Cell Sound: Select Custom Sound File"
+      },
+      {
+        "command": "cellCompletionSound.selectErrorSoundFile",
+        "title": "Cell Sound: Select Custom Error Sound File"
+      },
+      {
+        "command": "cellCompletionSound.testSound",
+        "title": "Cell Sound: Test Current Sound"
+      },
+      {
+        "command": "cellCompletionSound.showLogs",
+        "title": "Cell Sound: Show Debug Logs"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.100.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.0"
+  },
+  "dependencies": {
+    "play-sound": "^1.1.6"
+  }
+}
