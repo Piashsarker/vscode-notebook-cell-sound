@@ -1,6 +1,6 @@
 {
-  "name": "cell-completion-sound",
-  "displayName": "Cell Completion Sound",
+  "name": "notebook-cell-sound",
+  "displayName": "Notebook Cell Sound",
   "description": "Plays a customizable sound when a Jupyter notebook cell finishes execution - get audio feedback for long-running cells",
   "version": "1.0.0",
   "publisher": "piashsarker",
