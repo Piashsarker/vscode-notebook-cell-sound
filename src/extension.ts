@@ -132,6 +132,12 @@ function handleNotebookChange(event: vscode.NotebookDocumentChangeEvent): void {
 
         outputChannel.appendLine(`Cell ${cell.index}: executionOrder=${summary?.executionOrder}, success=${summary?.success}`);
         
+        // Track cells that have outputs being added (indicates execution in progress)
+        if (cellChange.outputs) {
+            outputChannel.appendLine(`  Outputs changed - marking cell as in progress`);
+            cellsInProgress.add(cellKey);
+        }
+
         if (cellChange.executionSummary) {
             outputChannel.appendLine(`  ExecutionSummary changed!`);
             
@@ -144,21 +150,21 @@ function handleNotebookChange(event: vscode.NotebookDocumentChangeEvent): void {
             if (newExecutionOrder !== undefined && newExecutionOrder !== previousOrder) {
                 cellExecutionCounts.set(cellKey, newExecutionOrder);
                 
-                // Only play sound if this isn't the first time we're seeing this cell
-                if (previousOrder !== undefined || cellsInProgress.has(cellKey)) {
+                // Play sound when cell execution completes
+                // Either: cell was marked in progress, OR this is a new execution (first time or re-run)
+                if (cellsInProgress.has(cellKey) || previousOrder === undefined || newExecutionOrder > (previousOrder || 0)) {
                     cellsInProgress.delete(cellKey);
-                    outputChannel.appendLine(`  Cell execution completed! Playing sound...`);
-                    onCellExecutionComplete(cell, summary?.success);
-                } else {
-                    outputChannel.appendLine(`  First time seeing this cell, storing execution order`);
+                    outputChannel.appendLine(`  Cell execution completed! Playing sound after delay...`);
+                    
+                    // Add a small delay to ensure outputs and success status are fully updated
+                    setTimeout(() => {
+                        // Re-read the cell's execution summary after delay
+                        const finalSuccess = cell.executionSummary?.success;
+                        outputChannel.appendLine(`  After delay - success=${finalSuccess}`);
+                        onCellExecutionComplete(cell, finalSuccess);
+                    }, 100);
                 }
             }
-        }
-        
-        // Track cells that have outputs being added (indicates execution in progress)
-        if (cellChange.outputs) {
-            outputChannel.appendLine(`  Outputs changed - marking cell as in progress`);
-            cellsInProgress.add(cellKey);
         }
     }
 }
