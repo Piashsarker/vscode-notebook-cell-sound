@@ -4,13 +4,7 @@ A VS Code / Kiro extension that plays a sound when a Jupyter notebook cell finis
 
 ## Demo
 
-https://github.com/user-attachments/assets/YOUR_VIDEO_ID_HERE
-
-> **Note:** Replace the video URL above with your actual demo video. To add a video:
-> 1. Go to your GitHub repo → Issues → New Issue
-> 2. Drag and drop your video file into the comment box
-> 3. GitHub will generate a URL like `https://github.com/user-attachments/assets/...`
-> 4. Copy that URL and replace the placeholder above
+https://github.com/user-attachments/assets/b04cb905-dbd9-414c-b048-8cb5c4c38a50
 
 ## Features
 
